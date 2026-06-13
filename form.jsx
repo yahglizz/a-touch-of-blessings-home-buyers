@@ -1,6 +1,7 @@
 // Multi-step seller lead capture form — the centerpiece of the landing page.
 const { useState, useRef, useEffect } = React;
 
+const FORMSPREE_ID = "xvzndpvq";
 const TOTAL_STEPS = 3;
 
 // Fake address suggestions to make the prototype feel real.
@@ -47,6 +48,8 @@ function SellerForm({ accent }) {
     email: "",
   });
   const [errs, setErrs] = useState({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [showSuggest, setShowSuggest] = useState(false);
   const addressRef = useRef(null);
 
@@ -77,10 +80,43 @@ function SellerForm({ accent }) {
     return Object.keys(e).length === 0;
   }
 
-  function next() {
+  async function next() {
     if (!validate(step)) return;
-    if (step < TOTAL_STEPS) setStep(s => s + 1);
-    else setDone(true);
+    if (step < TOTAL_STEPS) { setStep(s => s + 1); return; }
+
+    setSubmitting(true);
+    setSubmitError("");
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          address: data.address,
+          city: data.city,
+          property_type: data.propType,
+          bedrooms: data.beds,
+          bathrooms: data.baths,
+          sqft: data.sqft || "Not provided",
+          condition: data.condition,
+          timeline: data.timeline,
+          reasons: data.reasons.join(", ") || "Not specified",
+          _subject: `New cash offer request — ${data.address || "property"}`,
+        }),
+      });
+      const json = await res.json();
+      if (res.ok) {
+        setDone(true);
+      } else {
+        setSubmitError(json?.errors?.[0]?.message || "Something went wrong. Please try again.");
+      }
+    } catch (e) {
+      setSubmitError("Network error — check your connection and try again.");
+    } finally {
+      setSubmitting(false);
+    }
   }
   function back() {
     if (step > 1) setStep(s => s - 1);
@@ -321,13 +357,19 @@ function SellerForm({ accent }) {
             </div>
 
             <div className="form-actions">
-              <button className="btn btn-ghost" onClick={back}>
+              <button className="btn btn-ghost" onClick={back} disabled={submitting}>
                 <Icon.ArrowLeft /> Back
               </button>
-              <button className="btn btn-primary" onClick={next}>
-                Get my cash offer <Icon.ArrowRight />
+              <button className="btn btn-primary" onClick={next} disabled={submitting}>
+                {submitting ? "Sending…" : <span>Get my cash offer <Icon.ArrowRight /></span>}
               </button>
             </div>
+
+            {submitError && (
+              <div className="err" style={{marginTop: 10, fontSize: 13.5}}>
+                {submitError}
+              </div>
+            )}
 
             <div className="micro">
               <Icon.Lock />
