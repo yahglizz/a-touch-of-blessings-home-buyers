@@ -913,6 +913,158 @@
 
   /* Tweaks z-index */
   .tweaks-anchor { position: relative; z-index: 1000; }
+
+  /* ===== Hamburger / Mobile Menu ===== */
+  .hamburger {
+    display: none;
+    align-items: center; justify-content: center;
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  @media (max-width: 900px) {
+    .hamburger { display: flex; }
+  }
+  .mobile-menu {
+    position: absolute; left: 0; right: 0; top: 100%;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    padding: 12px 20px 20px;
+    display: flex; flex-direction: column; gap: 4px;
+    z-index: 39;
+    box-shadow: var(--shadow-md);
+  }
+  .mobile-menu a {
+    display: block;
+    padding: 14px 8px;
+    font-size: 16px;
+    color: var(--ink-2);
+    border-bottom: 1px solid var(--line-2);
+    transition: color .15s;
+  }
+  .mobile-menu a:hover { color: var(--ink); }
+  .mobile-menu a:last-child { border-bottom: none; }
+  .mobile-menu-cta {
+    margin-top: 8px;
+    padding: 14px 20px !important;
+    background: var(--ink);
+    color: var(--paper) !important;
+    border-radius: 999px;
+    text-align: center;
+    font-weight: 500;
+    border-bottom: none !important;
+  }
+
+  /* ===== Touch Targets (global min 44px) ===== */
+  .btn { min-height: 44px; }
+  .chip { min-height: 44px; display: inline-flex; align-items: center; }
+  .nav-cta { min-height: 44px; }
+
+  /* ===== Nav small-screen overflow fix ===== */
+  @media (max-width: 480px) {
+    .brand-name { font-size: 16px; }
+    .brand-mark { width: 40px; height: 40px; border-radius: 10px; }
+    .nav-cta { display: none; }
+  }
+
+  /* ===== Hero mobile ===== */
+  @media (max-width: 720px) {
+    .hero { min-height: 0; padding: 52px 0 60px; }
+    .stat .num { font-size: 28px; }
+    .stat .lbl { font-size: 9.5px; }
+    .trust-row { gap: 12px 18px; }
+    .trust-item { font-size: 12.5px; }
+    .hero-scroll-cta { margin-top: 24px; padding: 14px 20px; font-size: 14px; }
+  }
+
+  /* ===== Section padding mobile ===== */
+  @media (max-width: 720px) {
+    section { padding: 60px 0; }
+    .form-section { padding: 60px 0; }
+    .section-head { margin-bottom: 36px; }
+  }
+
+  /* ===== Form card mobile ===== */
+  @media (max-width: 640px) {
+    .form-card { padding: 20px 16px 18px; }
+    .form-card-wrap::before { inset: 14px -10px -14px 12px; }
+    .form-card-wrap::after { right: -4px; top: -12px; font-size: 9px; padding: 6px 10px; }
+    .form-head h3 { font-size: 24px; }
+    .form-head p { font-size: 12.5px; }
+  }
+
+  /* ===== Form actions: stack on very small screens ===== */
+  @media (max-width: 480px) {
+    .form-actions { flex-direction: column-reverse; align-items: stretch; gap: 8px; }
+    .form-actions .btn-primary { width: 100%; justify-content: center; }
+    .form-actions .btn-ghost { text-align: center; }
+  }
+
+  /* ===== Chip: smaller on mobile so they fit ===== */
+  @media (max-width: 480px) {
+    .chip { padding: 10px 12px; font-size: 13px; }
+    .chip-row { gap: 6px; }
+  }
+
+  /* ===== Strip mobile ===== */
+  @media (max-width: 640px) {
+    .strip-inner { flex-direction: column; gap: 14px; text-align: center; }
+    .strip-logos { justify-content: center; gap: 20px; flex-wrap: wrap; }
+  }
+
+  /* ===== Steps ===== */
+  @media (max-width: 560px) {
+    .step { padding: 28px 22px 30px; }
+  }
+
+  /* ===== Comparison mobile ===== */
+  @media (max-width: 560px) {
+    .compare-col { padding: 24px 18px; }
+    .compare-h { font-size: 22px; }
+  }
+
+  /* ===== Testimonials ===== */
+  @media (max-width: 560px) {
+    .quote { padding: 28px 22px; }
+    .quote blockquote { font-size: 22px; }
+    .mini-quote { padding: 16px 16px; }
+  }
+
+  /* ===== FAQ mobile ===== */
+  @media (max-width: 560px) {
+    .faq summary { font-size: 18px; }
+    .faq .a { font-size: 14.5px; }
+  }
+
+  /* ===== Final CTA mobile ===== */
+  @media (max-width: 480px) {
+    .final-actions { flex-direction: column; }
+    .final-actions .btn { width: 100%; justify-content: center; }
+    .final-aside { padding: 18px; }
+    .final-aside .big { font-size: 30px; }
+  }
+
+  /* ===== Footer mobile ===== */
+  @media (max-width: 560px) {
+    .foot-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 720px) {
+    .foot-bottom { flex-direction: column; gap: 8px; }
+    footer { padding: 44px 0 32px; }
+  }
+
+  /* ===== Section head font on mobile ===== */
+  @media (max-width: 560px) {
+    .section-head h2 { font-size: 34px; }
+    .form-section-h { font-size: 34px; }
+  }
+
+  /* ===== Sticky CTA: better tap target ===== */
+  .sticky-cta { min-height: 52px; }
 </style>
 </head>
 <body>

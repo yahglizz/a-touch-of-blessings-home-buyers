@@ -1,14 +1,26 @@
 // Marketing sections for the landing page.
+const { useState: useNavState, useEffect: useNavEffect } = React;
 
 function Nav({ phone = "(404) 555-0188" }) {
+  const [menuOpen, setMenuOpen] = useNavState(false);
+
+  useNavEffect(() => {
+    if (!menuOpen) return;
+    const close = () => setMenuOpen(false);
+    window.addEventListener("scroll", close, { passive: true });
+    return () => window.removeEventListener("scroll", close);
+  }, [menuOpen]);
+
+  const closeMenu = () => setMenuOpen(false);
+
   return (
     <nav className="nav">
       <div className="container nav-inner">
         <div className="brand">
           <div className="brand-mark"><img src="assets/logo.png" alt="A Touch of Blessings" /></div>
           <div>
-            <div className="brand-name">A Touch of <em>Blessings</em> Home Buyers</div>
-            <div className="brand-sub">Buying homes nationwide</div>
+            <div className="brand-name">A Touch of <em>Blessings</em></div>
+            <div className="brand-sub">Home Buyers · Nationwide</div>
           </div>
         </div>
         <div className="nav-links">
@@ -18,11 +30,26 @@ function Nav({ phone = "(404) 555-0188" }) {
           <a href="#stories">Stories</a>
           <a href="#faq">FAQ</a>
         </div>
-        <a href="#get-offer" className="nav-cta">
-          <span className="dot"></span>
-          Get my offer
-        </a>
+        <div style={{display:"flex",alignItems:"center",gap:8}}>
+          <a href="#get-offer" className="nav-cta">
+            <span className="dot"></span>
+            Get my offer
+          </a>
+          <button className="hamburger" onClick={() => setMenuOpen(o => !o)} aria-label={menuOpen ? "Close menu" : "Open menu"}>
+            {menuOpen ? <Icon.X size={20} stroke={2.2} /> : <Icon.Menu size={20} stroke={2} />}
+          </button>
+        </div>
       </div>
+      {menuOpen && (
+        <div className="mobile-menu">
+          <a href="#how" onClick={closeMenu}>How it works</a>
+          <a href="#why" onClick={closeMenu}>Why us</a>
+          <a href="#situations" onClick={closeMenu}>Situations</a>
+          <a href="#stories" onClick={closeMenu}>Stories</a>
+          <a href="#faq" onClick={closeMenu}>FAQ</a>
+          <a href="#get-offer" className="mobile-menu-cta" onClick={closeMenu}>Get my cash offer →</a>
+        </div>
+      )}
     </nav>
   );
 }

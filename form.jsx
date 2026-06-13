@@ -158,7 +158,7 @@ function SellerForm({ accent }) {
                   onChange={e => { update("address", e.target.value); setShowSuggest(true); }}
                   onFocus={() => setShowSuggest(true)}
                   onBlur={() => setTimeout(() => setShowSuggest(false), 150)}
-                  autoFocus
+                  autoFocus={false}
                 />
               </div>
               {showSuggest && filteredSuggestions.length > 0 && (
