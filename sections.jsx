@@ -421,7 +421,7 @@ function FinalCTA({ phone = "(404) 555-0188" }) {
               </div>
             </div>
             <div className="final-aside">
-              <div className="label">This month — May 2026</div>
+              <div className="label">This month — June 2026</div>
               <div className="big">48 homes</div>
               <div className="sub">closed across the U.S. with an average time-from-offer-to-funded of 11 days.</div>
               <div className="row"><span className="k">Avg offer turnaround</span><span>18h</span></div>
